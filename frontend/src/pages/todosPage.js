@@ -1,3 +1,4 @@
+import { renderTaskRow } from "../utils/renderTodo";
 export const todosPage = () => {
   const container = document.createElement("div");
 
@@ -7,18 +8,23 @@ export const todosPage = () => {
     "items-center",
     "justify-center",
     "h-screen",
-    "bg-gray-200"
+    "bg-pink-200"
   );
+
+  const container2 = document.createElement("div");
+
+  container2.classList.add("flex", "justify-center", "w-full", "gap-4");
 
   const btnHome = document.createElement("button");
 
   btnHome.classList.add(
-    "bg-blue-500",
-    "text-white",
+    "bg-white",
+    "text-black",
     "p-2",
     "rounded",
-    "hover:bg-blue-600",
-    "mb-4"
+    "hover:bg-pink-400",
+    "mb-4",
+    "font-bold"
   );
 
   btnHome.textContent = "Home";
@@ -60,10 +66,15 @@ export const todosPage = () => {
   th4.classList.add("border", "px-4", "py-2");
   th4.textContent = "Owner Id";
 
+  const th5 = document.createElement("th");
+  th5.classList.add("border", "px-4", "py-2");
+  th5.textContent = "Actions";
+
   tr.appendChild(th1);
   tr.appendChild(th2);
   tr.appendChild(th3);
   tr.appendChild(th4);
+  tr.appendChild(th5);
 
   thead.appendChild(tr);
 
@@ -80,36 +91,62 @@ export const todosPage = () => {
     .then((response) => response.json())
     .then((data) => {
       data.todos.forEach((todo) => {
-        if (todo.id > 10);
-
-        const tr = document.createElement("tr");
-
-        const td1 = document.createElement("td");
-        td1.classList.add("border", "px-4", "py-2");
-        td1.textContent = todo.id;
-
-        const td2 = document.createElement("td");
-        td2.classList.add("border", "px-4", "py-2");
-        td2.textContent = todo.title;
-
-        const td3 = document.createElement("td");
-        td3.classList.add("border", "px-4", "py-2");
-        td3.textContent = todo.completed ? "Sí" : "No";
-
-        const td4 = document.createElement("td");
-        td4.classList.add("border", "px-4", "py-2");
-        td4.textContent = todo.owner;
-
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-        tr.appendChild(td4);
-        tbody.appendChild(tr);
+        renderTaskRow(todo);
       });
     });
 
+  const form = document.createElement("form");
+  form.classList.add("flex", "flex-col", "items-center", "mt-4");
+
+  const input = document.createElement("input");
+  input.classList.add("p-2", "border", "mb-2", "w-[300px]");
+  input.placeholder = "new Todo";
+
+  const button = document.createElement("button");
+  button.classList.add(
+    "bg-pink-500",
+    "text-white",
+    "p-2",
+    "rounded",
+    "hover:bg-pink-800"
+  );
+  button.textContent = "Crear";
+  button.type = "submit";
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    const title = input.value;
+    if (title) {
+      fetch("http://localhost:4000/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ title }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+
+          if (data.todos) {
+            renderTaskRow(data.todos);
+            input.value = "";
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  });
+
+  form.appendChild(input);
+  form.appendChild(button);
+
+  container2.appendChild(table);
+  container2.appendChild(form);
   container.appendChild(title);
-  container.appendChild(table);
+  container.appendChild(container2);
 
   return container;
 };
