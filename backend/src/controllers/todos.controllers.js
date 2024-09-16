@@ -7,14 +7,22 @@ export const getAllTodosCtrl = (req, res) => {
 };
 
 export const crearTodosCtrl = (req, res) => {
-  try {
-    const { title, completed } = req.body;
-    const id = database.length + 1;
-    database.todos.push({ title, completed });
-    res.send("Se ha agregado una nueva tarea.");
-  } catch (error) {
-    console.log(error);
+  const user = req.user;
+  const { title } = req.body;
+  if (!user) {
+    return res.status(401).json({ message: "No autorizado" });
   }
+  if (!title) {
+    return res.status(400).json({ message: "Completar todos los campos" });
+  }
+  const Todo = {
+    id: database.todos.length + 1,
+    title,
+    completed: false,
+    owner: user.id,
+  };
+  database.todos.push(Todo);
+  res.json({ message: "Tarea creada", todo: Todo });
 };
 
 export const actualizarTodosCtrl = (req, res) => {
@@ -47,7 +55,7 @@ export const eliminarTodosCtrl = (req, res) => {
       (todos) => todos.id === Number(id)
     );
     database.todos.splice(taskIndex, 1);
-    res.send("La tarea fue eliminada.");
+    res.json("Todo deleted");
   } catch (error) {
     console.log(error);
   }

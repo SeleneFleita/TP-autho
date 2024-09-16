@@ -9,8 +9,8 @@ import validarJwt from "../middlewares/validar-jwt.js";
 const todosRouter = Router();
 
 todosRouter.get("/", validarJwt, getAllTodosCtrl);
-todosRouter.post("/", crearTodosCtrl);
-todosRouter.put("/:id", actualizarTodosCtrl);
-todosRouter.delete("/:id", eliminarTodosCtrl);
+todosRouter.post("/", validarJwt, crearTodosCtrl);
+todosRouter.put("/:id", validarJwt, actualizarTodosCtrl);
+todosRouter.delete("/:id", validarJwt, eliminarTodosCtrl);
 
 export { todosRouter };
