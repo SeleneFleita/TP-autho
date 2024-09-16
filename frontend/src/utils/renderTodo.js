@@ -1,18 +1,11 @@
 export function renderTaskRow(todo) {
-  const tbody = document.querySelector("tbody");
+  const todoElement = document.createElement("div");
+  const todoTitle = document.createElement("h1");
+  const todoCheckbox = document.createElement("input");
+  const todoActions = document.createElement("div");
 
-  const tr = document.createElement("tr");
-
-  const td2 = document.createElement("td");
-  td2.classList.add("border", "px-4", "py-2");
-  td2.textContent = todo.title;
-
-  const td3 = document.createElement("td");
-  td3.classList.add("border", "px-4", "py-2");
-  td3.textContent = todo.completed ? "Sí­" : "No";
-
-  const td5 = document.createElement("td");
-  td5.classList.add("border", "px-4", "py-2");
+  todoCheckbox.type = "checkbox";
+  todoTitle.textContent = todo.title;
 
   const btnDelete = document.createElement("button");
   btnDelete.classList.add(
@@ -79,10 +72,11 @@ export function renderTaskRow(todo) {
     }
   });
 
-  td5.appendChild(btnEdit);
-  td5.appendChild(btnDelete);
-  tr.appendChild(td2);
-  tr.appendChild(td3);
-  tr.appendChild(td5);
-  tbody.appendChild(tr);
+  todoActions.appendChild(btnEdit);
+  todoActions.appendChild(btnDelete);
+  todoElement.appendChild(todoTitle);
+  todoElement.appendChild(todoCheckbox);
+  todoElement.appendChild(todoActions);
+
+  return todoElement;
 }
