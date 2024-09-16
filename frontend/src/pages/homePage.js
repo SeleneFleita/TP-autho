@@ -6,7 +6,7 @@ export const homePage = () => {
     "items-center",
     "justify-center",
     "h-screen",
-    "bg-gray-200",
+    "bg-pink-200",
     "flex-col",
     "gap-4"
   );

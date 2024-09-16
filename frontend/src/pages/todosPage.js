@@ -50,9 +50,6 @@ export const todosPage = () => {
 
   const thead = document.createElement("thead");
   const tr = document.createElement("tr");
-  const th1 = document.createElement("th");
-  th1.classList.add("border", "px-4", "py-2");
-  th1.textContent = "ID";
 
   const th2 = document.createElement("th");
   th2.classList.add("border", "px-4", "py-2");
@@ -62,18 +59,12 @@ export const todosPage = () => {
   th3.classList.add("border", "px-4", "py-2");
   th3.textContent = "Completed";
 
-  const th4 = document.createElement("th");
-  th4.classList.add("border", "px-4", "py-2");
-  th4.textContent = "Owner Id";
-
   const th5 = document.createElement("th");
   th5.classList.add("border", "px-4", "py-2");
   th5.textContent = "Actions";
 
-  tr.appendChild(th1);
   tr.appendChild(th2);
   tr.appendChild(th3);
-  tr.appendChild(th4);
   tr.appendChild(th5);
 
   thead.appendChild(tr);
@@ -96,7 +87,7 @@ export const todosPage = () => {
     });
 
   const form = document.createElement("form");
-  form.classList.add("flex", "flex-col", "items-center", "mt-4");
+  form.classList.add("flex", "flex-col", "items-center");
 
   const input = document.createElement("input");
   input.classList.add("p-2", "border", "mb-2", "w-[300px]");
@@ -127,10 +118,8 @@ export const todosPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-
-          if (data.todos) {
-            renderTaskRow(data.todos);
+          if (data.todo) {
+            renderTaskRow(data.todo);
             input.value = "";
           }
         })

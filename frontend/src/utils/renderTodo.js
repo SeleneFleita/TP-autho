@@ -3,10 +3,6 @@ export function renderTaskRow(todo) {
 
   const tr = document.createElement("tr");
 
-  const td1 = document.createElement("td");
-  td1.classList.add("border", "px-4", "py-2");
-  td1.textContent = todo.id;
-
   const td2 = document.createElement("td");
   td2.classList.add("border", "px-4", "py-2");
   td2.textContent = todo.title;
@@ -14,10 +10,6 @@ export function renderTaskRow(todo) {
   const td3 = document.createElement("td");
   td3.classList.add("border", "px-4", "py-2");
   td3.textContent = todo.completed ? "Sí­" : "No";
-
-  const td4 = document.createElement("td");
-  td4.classList.add("border", "px-4", "py-2");
-  td4.textContent = todo.owner;
 
   const td5 = document.createElement("td");
   td5.classList.add("border", "px-4", "py-2");
@@ -89,10 +81,8 @@ export function renderTaskRow(todo) {
 
   td5.appendChild(btnEdit);
   td5.appendChild(btnDelete);
-  tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
-  tr.appendChild(td4);
   tr.appendChild(td5);
   tbody.appendChild(tr);
 }
