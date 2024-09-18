@@ -48,13 +48,17 @@ export function renderTaskRow(todo) {
         },
         credentials: "include",
         body: JSON.stringify({ title: newTitle }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.todo) {
-            td2.textContent = data.todo.title;
-          }
-        });
+      }).then((response) => {
+        if (response.ok) {
+          window.location.reload();
+        }
+      });
+      // .then((data) => {
+      //   console.log(data);
+      //   if (data.todo) {
+      //     td2.textContent = data.todo.title;
+      //   }
+      // });
     }
   });
 
